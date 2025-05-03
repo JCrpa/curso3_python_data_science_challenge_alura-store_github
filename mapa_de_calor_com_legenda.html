@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_53a5788a27040fd5efcfef929b0e4137 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+</head>
+<body>
+    
+    
+     <div style="position: fixed;
+                 bottom: 50px; left: 50px; width: 180px; height: 120px;
+                 border:2px solid grey; z-index:9999; font-size:14px; background-color:white; opacity:0.9;">
+       &nbsp; <b>Intensidade de Vendas:</b> <br>
+       &nbsp; <i style="background:blue; color:blue;">██</i> Baixa <br>
+       &nbsp; <i style="background:lime; color:lime;">██</i> Média-Baixa <br>
+       &nbsp; <i style="background:yellow; color:yellow;">██</i> Média <br>
+       &nbsp; <i style="background:orange; color:orange;">██</i> Média-Alta <br>
+       &nbsp; <i style="background:red; color:red;">██</i> Alta
+     </div>
+     
+    
+            <div class="folium-map" id="map_53a5788a27040fd5efcfef929b0e4137" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_53a5788a27040fd5efcfef929b0e4137 = L.map(
+                "map_53a5788a27040fd5efcfef929b0e4137",
+                {
+                    center: [-15.79, -47.88],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 4,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_663176cb3526a9ec7686cde0282178f3 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_663176cb3526a9ec7686cde0282178f3.addTo(map_53a5788a27040fd5efcfef929b0e4137);
+        
+    
+            var heat_map_388aad1ddcb5937c5c5d610e6767b5c9 = L.heatLayer(
+                [[-13.29, -41.71, 310], [-3.79, -52.48, 81], [-3.47, -65.1, 14], [-18.1, -44.38, 1102], [-24.89, -51.55, 473], [-22.19, -48.79, 3943], [-15.83, -47.86, 242], [-20.51, -54.54, 82], [1.99, -61.33, 2], [-9.62, -36.82, 41], [-8.38, -37.86, 181], [-8.77, -70.55, 3], [-10.83, -63.34, 19], [-15.98, -49.86, 186], [-5.42, -45.44, 62], [-22.25, -42.66, 1212], [-7.28, -36.72, 46], [1.41, -51.77, 9], [-5.2, -39.53, 151], [-10.57, -37.45, 28], [-19.19, -40.34, 171], [-5.81, -36.59, 48], [-30.17, -53.5, 534], [-6.6, -42.28, 40], [-9.46, -48.26, 29], [-27.45, -50.95, 346], [-12.64, -55.42, 80]],
+                {
+  "minOpacity": 0.5,
+  "maxZoom": 18,
+  "radius": 25,
+  "blur": 15,
+}
+            );
+        
+    
+            heat_map_388aad1ddcb5937c5c5d610e6767b5c9.addTo(map_53a5788a27040fd5efcfef929b0e4137);
+        
+    
+            var marker_17db71c09fd57dc0e52599282abc1f8b = L.marker(
+                [-15.0, -52.0],
+                {
+}
+            ).addTo(map_53a5788a27040fd5efcfef929b0e4137);
+        
+    
+            var icon_72499ebe9934607e392843d29470cc74 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_17db71c09fd57dc0e52599282abc1f8b.bindTooltip(
+                `<div>
+                     Centro-Oeste: 4 municípios
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_17db71c09fd57dc0e52599282abc1f8b.setIcon(icon_72499ebe9934607e392843d29470cc74);
+            
+    
+            var marker_f4a8f9e6f1a34c8fcb7f7570987448d8 = L.marker(
+                [-8.0, -45.0],
+                {
+}
+            ).addTo(map_53a5788a27040fd5efcfef929b0e4137);
+        
+    
+            var icon_0329d7b502749ecd5d63982d3a06f3d1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_f4a8f9e6f1a34c8fcb7f7570987448d8.bindTooltip(
+                `<div>
+                     Nordeste: 9 municípios
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f4a8f9e6f1a34c8fcb7f7570987448d8.setIcon(icon_0329d7b502749ecd5d63982d3a06f3d1);
+            
+    
+            var marker_7954ed0c3aac9e538f15d642214f3f94 = L.marker(
+                [-2.5, -55.0],
+                {
+}
+            ).addTo(map_53a5788a27040fd5efcfef929b0e4137);
+        
+    
+            var icon_0d7108ea37230f62f431a8b7ea3e310e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_7954ed0c3aac9e538f15d642214f3f94.bindTooltip(
+                `<div>
+                     Norte: 7 municípios
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7954ed0c3aac9e538f15d642214f3f94.setIcon(icon_0d7108ea37230f62f431a8b7ea3e310e);
+            
+    
+            var marker_4672413b2759e7ae71fc8a6935d5d8a5 = L.marker(
+                [-22.0, -45.0],
+                {
+}
+            ).addTo(map_53a5788a27040fd5efcfef929b0e4137);
+        
+    
+            var icon_ebd772bedc5a57322cab7704a604b1c0 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_4672413b2759e7ae71fc8a6935d5d8a5.bindTooltip(
+                `<div>
+                     Sudeste: 4 municípios
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4672413b2759e7ae71fc8a6935d5d8a5.setIcon(icon_ebd772bedc5a57322cab7704a604b1c0);
+            
+    
+            var marker_e6ebdab69d04ac5066437c16d5074257 = L.marker(
+                [-27.0, -52.0],
+                {
+}
+            ).addTo(map_53a5788a27040fd5efcfef929b0e4137);
+        
+    
+            var icon_cf689684318baab3493736544df6daf8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_e6ebdab69d04ac5066437c16d5074257.bindTooltip(
+                `<div>
+                     Sul: 3 municípios
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e6ebdab69d04ac5066437c16d5074257.setIcon(icon_cf689684318baab3493736544df6daf8);
+            
+</script>
+</html>
