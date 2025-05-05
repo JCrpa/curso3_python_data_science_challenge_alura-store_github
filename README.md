@@ -48,6 +48,8 @@ O relatório apresenta:
 ## 📂 Arquivos
 
 -   `loja_1.csv, loja_2.csv, loja_3.csv, loja_4.csv`: Base de dados.
+-   `AluraStoreBr.ipynb`: Notebook contendo os códigos Python.
+-   `mapa_de_calor_com_legenda.html`: Gráfico.
 -   `Analise_detalhada_rede_lojas_Sr_Joao.pdf`: Documento principal da análise.
 -   `Resumo_analise_rede_lojas_Sr_Joao.pdf`: Documento resumido da análise.
 
