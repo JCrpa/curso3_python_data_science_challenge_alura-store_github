@@ -2,7 +2,18 @@
 
 Este projeto contém uma análise resumida do desempenho da rede de lojas do Sr. João, com base em dados de faturamento, vendas, avaliação de clientes e outros indicadores estratégicos. O objetivo é fornecer uma visão geral dos pontos fortes e fracos da rede, além de recomendações para melhorias.
 
-## 🧾 Conteúdo do Relatório
+## 📌 Tópicos
+
+Navegue rapidamente pelas seções:
+
+🔹 [Conteúdo do Relatório](#conteudo-do-relatorio-1)
+🔹 [Principais Conclusões](#principais-conclusoes-1)
+🔹 [Recomendações](#recomendacoes-1)
+🔹 [Arquivos](#arquivos-1)
+🔹 [Requisitos](#requisitos-1)
+🔹 [Autor](#autor-1)
+
+## <a id="conteudo-do-relatorio-1">🧾 Conteúdo do Relatório</a>
 
 O relatório apresenta:
 
@@ -24,7 +35,7 @@ O relatório apresenta:
     -   Vendas por cidade
     -   Concentração de vendas por região (mapa de calor)
 
-## 📌 Principais Conclusões
+## <a id="principais-conclusoes-1"></a> 📌 Principais Conclusões
 
 -   A loja **1** apresentou o maior faturamento total.
 -   As lojas **1, 2 e 3** têm um faturamento robusto nas categorias de eletrônicos e eletrodomésticos.
@@ -34,7 +45,7 @@ O relatório apresenta:
 -   O **Sudeste** domina amplamente em volume de vendas.
 -   **Boracéia (SP)** se destaca com um volume de vendas excepcionalmente alto.
 
-## 📈 Recomendações
+## <a id="recomendacoes-1"></a> 📈 Recomendações
 
 -   **Estratégia Geral:**
     -   Diversificação geográfica para reduzir a dependência do Sudeste.
@@ -45,7 +56,7 @@ O relatório apresenta:
 -   **Regiões:**
     -   Desenvolver estratégias específicas para aumentar as vendas nas regiões Norte, Nordeste e Centro-Oeste.
 
-## 📂 Arquivos
+## <a id="arquivos-1"></a> 📂 Arquivos
 
 -   `loja_1.csv, loja_2.csv, loja_3.csv, loja_4.csv`: Base de dados.
 -   `AluraStoreBr.ipynb`: Notebook contendo os códigos Python.
@@ -53,10 +64,10 @@ O relatório apresenta:
 -   `Analise_detalhada_rede_lojas_Sr_Joao.pdf`: Documento principal da análise.
 -   `Resumo_analise_rede_lojas_Sr_Joao.pdf`: Documento resumido da análise.
 
-## 🔧 Requisitos
+## <a id="requisitos-1"></a> 🔧 Requisitos
 
 Nenhum requisito técnico necessário para visualização do conteúdo. O relatório está em formato PDF.
 
-## 🧑‍💼 Autor
+## <a id="autor-1"></a> 🧑‍💼 Autor
 
 Relatório preparado por João Costa, para fins gerenciais e de tomada de decisão estratégica sobre a rede de lojas do Sr. João.
