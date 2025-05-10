@@ -38,6 +38,14 @@ def calcular_vendas_faturamento_por_categoria_loja(dados, categoria):
     """Calcula vendas e faturamento por categoria e loja."""
     return dados[dados['Categoria'] == categoria].groupby('Loja').agg({'Quantidade': 'sum', 'Valor_Venda': 'sum'})
 
+def calcular_distribuicao_notas(dados):
+    """Calcula a distribuição das notas."""
+    return dados['Nota'].value_counts().sort_index()
+
+def calcular_media_avaliacoes_por_produto(dados):
+    """Calcula a média das avaliações por produto."""
+    return dados.groupby('Produto')['Nota'].mean().sort_values(ascending=False)
+
 st.title("Análise de Dados da AluraStore")
 
 aba_faturamento, aba_vendas_categoria, aba_avaliacoes = st.tabs(
@@ -112,4 +120,29 @@ with aba_vendas_categoria:
 
 with aba_avaliacoes:
     st.header("Análise de Avaliações")
-    st.write("Aqui vamos mostrar a análise de avaliações.")
+
+    # Seleção de Produto
+    produto_selecionado = st.selectbox("Selecione um Produto:", dados['Produto'].unique())
+
+    distribuicao_notas = calcular_distribuicao_notas(dados)
+    st.subheader("Distribuição das Notas")
+    st.dataframe(distribuicao_notas)
+
+    media_avaliacoes_produto = calcular_media_avaliacoes_por_produto(dados)
+    st.subheader("Média das Avaliações por Produto")
+    st.dataframe(media_avaliacoes_produto)
+
+    # Média de Avaliação do Produto Selecionado
+    st.subheader(f"Média de Avaliação de {produto_selecionado}")
+    media_produto_selecionado = dados[dados['Produto'] == produto_selecionado]['Nota'].mean()
+    st.write(f"A média de avaliação de {produto_selecionado} é: {media_produto_selecionado:.2f}")
+
+    # Gráfico de Distribuição das Notas
+    st.subheader("Gráfico de Distribuição das Notas")
+    fig_distribuicao_notas, ax_distribuicao_notas = plt.subplots(figsize=(8, 4))
+    distribuicao_notas.plot(kind='bar', ax=ax_distribuicao_notas, color='orange')
+    ax_distribuicao_notas.set_title("Distribuição das Notas", fontsize=16)
+    ax_distribuicao_notas.set_xlabel("Nota", fontsize=12)
+    ax_distribuicao_notas.set_ylabel("Quantidade", fontsize=12)
+    ax_distribuicao_notas.tick_params(axis='x', rotation=0)
+    st.pyplot(fig_distribuicao_notas)
