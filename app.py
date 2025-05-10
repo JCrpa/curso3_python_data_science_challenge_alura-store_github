@@ -14,8 +14,11 @@ def carregar_dados():
     for arquivo in arquivos_lojas:
         caminho_completo = os.path.join(caminho_base, arquivo)
         df_loja = pd.read_csv(caminho_completo)
-        nome_loja = arquivo.split('.')[0].capitalize().replace('_', ' ')  # Melhorando o nome da loja
+        nome_loja = arquivo.split('.')[0].capitalize().replace('_', ' ')
         df_loja['Loja'] = nome_loja
+        # Renomeando a coluna 'Preço' para 'Valor_Venda'
+        if 'Preço' in df_loja.columns:
+            df_loja.rename(columns={'Preço': 'Valor_Venda'}, inplace=True)
         lista_tabelas.append(df_loja)
 
     dados = pd.concat(lista_tabelas, ignore_index=True)
@@ -70,8 +73,11 @@ with aba_faturamento:
     st.write(f"O faturamento total é: R$ {faturamento_total:,.2f}")
 
     faturamento_por_loja = calcular_faturamento_por_loja(dados_filtrados)
+    # Converter Series para DataFrame e formatar
+    faturamento_por_loja_df = faturamento_por_loja.reset_index()
+    faturamento_por_loja_df.columns = ['Loja', 'Faturamento']  # Renomear colunas para melhor clareza
     st.subheader("Faturamento por Loja")
-    st.dataframe(faturamento_por_loja.style.format({"Valor_Venda": "R$ {:,.2f}"}))
+    st.dataframe(faturamento_por_loja_df.style.format({"Faturamento": "R$ {:,.2f}"}))
 
     # Gráfico de Faturamento por Loja
     st.subheader("Gráfico de Faturamento por Loja")
@@ -88,20 +94,23 @@ with aba_vendas_categoria:
     st.write("Esta seção mostra as vendas e o faturamento por categoria. Selecione uma categoria para ver os detalhes.")
 
     # Seleção de Categoria
-    categoria_selecionada = st.selectbox("Selecione uma Categoria:", dados['Categoria'].unique())
+    categoria_selecionada = st.selectbox("Selecione uma Categoria:", dados['Categoria do Produto'].unique()) # Atualizado nome da coluna
 
     vendas_por_categoria = calcular_vendas_por_categoria(dados)
     st.subheader("Total de Vendas por Categoria")
     st.dataframe(vendas_por_categoria)
 
     faturamento_por_categoria = calcular_faturamento_por_categoria(dados)
+    # Converter Series para DataFrame e formatar
+    faturamento_por_categoria_df = faturamento_por_categoria.reset_index()
+    faturamento_por_categoria_df.columns = ['Categoria', 'Faturamento'] # Renomear colunas
     st.subheader("Faturamento por Categoria")
-    st.dataframe(faturamento_por_categoria.style.format({"Valor_Venda": "R$ {:,.2f}"}))
+    st.dataframe(faturamento_por_categoria_df.style.format({"Faturamento": "R$ {:,.2f}"}))
 
     # Vendas e Faturamento por Categoria e Loja
     st.subheader(f"Vendas e Faturamento de {categoria_selecionada} por Loja")
     vendas_faturamento_categoria_loja = calcular_vendas_faturamento_por_categoria_loja(dados, categoria_selecionada)
-    st.dataframe(vendas_faturamento_categoria_loja.style.format({"Valor_Venda": "R$ {:,.2f}"}))
+    st.dataframe(vendas_faturamento_categoria_loja.style.format({"Valor_Venda": "R$ {:,.2f}"})) # Mantém 'Valor_Venda' aqui
 
     # Gráfico de Vendas por Categoria
     st.subheader("Gráfico de Vendas por Categoria")
