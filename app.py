@@ -14,6 +14,8 @@ def carregar_dados():
     for arquivo in arquivos_lojas:
         caminho_completo = os.path.join(caminho_base, arquivo)
         df_loja = pd.read_csv(caminho_completo)
+        nome_loja = arquivo.split('.')[0].capitalize().replace('_', ' ')  # Melhorando o nome da loja
+        df_loja['Loja'] = nome_loja
         lista_tabelas.append(df_loja)
 
     dados = pd.concat(lista_tabelas, ignore_index=True)
