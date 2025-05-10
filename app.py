@@ -2,6 +2,21 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os  # Importe o módulo os
+
+@st.cache_data
+def carregar_dados():
+    caminho_base = "./base-de-dados-challenge-1/"  # Ajuste o caminho se necessário
+    arquivos_lojas = ['loja_1.csv', 'loja_2.csv', 'loja_3.csv', 'loja_4.csv']
+    lista_tabelas = []
+
+    for arquivo in arquivos_lojas:
+        caminho_completo = os.path.join(caminho_base, arquivo)
+        df_loja = pd.read_csv(caminho_completo)
+        lista_tabelas.append(df_loja)
+
+    dados = pd.concat(lista_tabelas, ignore_index=True)
+    return dados
 
 st.title("Análise de Dados da AluraStore")
 
@@ -9,27 +24,25 @@ aba_faturamento, aba_vendas_categoria, aba_avaliacoes = st.tabs(
     ["Faturamento", "Vendas por Categoria", "Avaliações"]
 )
 
+dados = carregar_dados()
+
 with aba_faturamento:
     st.header("Análise de Faturamento")
-    col1, col2 = st.columns(2)
+    st.write("Dados Carregados:")
+    st.dataframe(dados.head())
 
-    with col1:
-        st.subheader("Faturamento Total")
-        st.write("Aqui vamos mostrar o faturamento total.")
-
-    with col2:
-        st.subheader("Faturamento por Loja")
-        st.write("Aqui vamos mostrar o faturamento por loja.")
+    # Resto da análise de faturamento...
 
 with aba_vendas_categoria:
     st.header("Análise de Vendas por Categoria")
+    st.write("Dados Carregados:")
+    st.dataframe(dados.head())
 
-    with st.expander("Vendas de Eletrodomésticos"):
-        st.write("Informações detalhadas sobre as vendas de eletrodomésticos.")
-
-    with st.expander("Vendas de Eletrônicos"):
-        st.write("Informações detalhadas sobre as vendas de eletrônicos.")
+    # Resto da análise de vendas por categoria...
 
 with aba_avaliacoes:
     st.header("Análise de Avaliações")
-    st.write("Aqui vamos mostrar a análise de avaliações.")
+    st.write("Dados Carregados:")
+    st.dataframe(dados.head())
+
+    # Resto da análise de avaliações...
