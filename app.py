@@ -41,8 +41,8 @@ def calcular_faturamento_por_categoria(dados):
     return dados.groupby('Categoria do Produto')['Valor_Venda'].sum()
 
 def calcular_vendas_faturamento_por_categoria_loja(dados, categoria):
-    """Calcula vendas e faturamento por categoria e loja."""
-    return dados[dados['Categoria do Produto'] == categoria].groupby('Loja').agg({'Quantidade': 'sum', 'Valor_Venda': 'sum'})
+    """Calcula vendas (contagem) e faturamento por categoria e loja."""
+    return dados[dados['Categoria do Produto'] == categoria].groupby('Loja').agg({'Produto': 'count', 'Valor_Venda': 'sum'})
 
 def calcular_distribuicao_notas(dados):
     """Calcula a distribuição das notas."""
