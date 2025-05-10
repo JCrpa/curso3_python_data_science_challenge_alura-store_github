@@ -33,8 +33,8 @@ def calcular_faturamento_por_loja(dados):
     return dados.groupby('Loja')['Valor_Venda'].sum()
 
 def calcular_vendas_por_categoria(dados):
-    """Calcula o total de vendas por categoria."""
-    return dados.groupby('Categoria do Produto')['Quantidade'].sum()
+    """Calcula o total de vendas por categoria (contagem de ocorrências)."""
+    return dados.groupby('Categoria do Produto')['Produto'].count()
 
 def calcular_faturamento_por_categoria(dados):
     """Calcula o faturamento total por categoria."""
