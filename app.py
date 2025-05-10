@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
+import datetime
 
 @st.cache_data
 def carregar_dados():
@@ -56,6 +57,7 @@ dados = carregar_dados()
 
 with aba_faturamento:
     st.header("Análise de Faturamento")
+    st.write("Esta seção mostra o faturamento total e por loja. Use o filtro abaixo para selecionar as lojas desejadas.")
 
     # Seleção de Loja
     lojas_selecionadas = st.multiselect("Selecione as Lojas:", dados['Loja'].unique(), default=dados['Loja'].unique())
@@ -67,7 +69,7 @@ with aba_faturamento:
 
     faturamento_por_loja = calcular_faturamento_por_loja(dados_filtrados)
     st.subheader("Faturamento por Loja")
-    st.dataframe(faturamento_por_loja)
+    st.dataframe(faturamento_por_loja.style.format({"Valor_Venda": "R$ {:,.2f}"}))
 
     # Gráfico de Faturamento por Loja
     st.subheader("Gráfico de Faturamento por Loja")
@@ -81,6 +83,7 @@ with aba_faturamento:
 
 with aba_vendas_categoria:
     st.header("Análise de Vendas por Categoria")
+    st.write("Esta seção mostra as vendas e o faturamento por categoria. Selecione uma categoria para ver os detalhes.")
 
     # Seleção de Categoria
     categoria_selecionada = st.selectbox("Selecione uma Categoria:", dados['Categoria'].unique())
@@ -91,12 +94,12 @@ with aba_vendas_categoria:
 
     faturamento_por_categoria = calcular_faturamento_por_categoria(dados)
     st.subheader("Faturamento por Categoria")
-    st.dataframe(faturamento_por_categoria)
+    st.dataframe(faturamento_por_categoria.style.format({"Valor_Venda": "R$ {:,.2f}"}))
 
     # Vendas e Faturamento por Categoria e Loja
     st.subheader(f"Vendas e Faturamento de {categoria_selecionada} por Loja")
     vendas_faturamento_categoria_loja = calcular_vendas_faturamento_por_categoria_loja(dados, categoria_selecionada)
-    st.dataframe(vendas_faturamento_categoria_loja)
+    st.dataframe(vendas_faturamento_categoria_loja.style.format({"Valor_Venda": "R$ {:,.2f}"}))
 
     # Gráfico de Vendas por Categoria
     st.subheader("Gráfico de Vendas por Categoria")
@@ -120,6 +123,7 @@ with aba_vendas_categoria:
 
 with aba_avaliacoes:
     st.header("Análise de Avaliações")
+    st.write("Esta seção mostra a distribuição das notas e a média das avaliações por produto. Selecione um produto para ver os detalhes.")
 
     # Seleção de Produto
     produto_selecionado = st.selectbox("Selecione um Produto:", dados['Produto'].unique())
@@ -130,7 +134,7 @@ with aba_avaliacoes:
 
     media_avaliacoes_produto = calcular_media_avaliacoes_por_produto(dados)
     st.subheader("Média das Avaliações por Produto")
-    st.dataframe(media_avaliacoes_produto)
+    st.dataframe(media_avaliacoes_produto.style.format("{:.2f}"))
 
     # Média de Avaliação do Produto Selecionado
     st.subheader(f"Média de Avaliação de {produto_selecionado}")
