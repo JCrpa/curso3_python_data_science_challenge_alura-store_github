@@ -144,8 +144,11 @@ with aba_avaliacoes:
     st.dataframe(distribuicao_notas)
 
     media_avaliacoes_produto = calcular_media_avaliacoes_por_produto(dados)
+    # Converter Series para DataFrame e formatar
+    media_avaliacoes_produto_df = media_avaliacoes_produto.reset_index()
+    media_avaliacoes_produto_df.columns = ['Produto', 'Média da Avaliação'] # Renomear colunas
     st.subheader("Média das Avaliações por Produto")
-    st.dataframe(media_avaliacoes_produto.style.format("{:.2f}"))
+    st.dataframe(media_avaliacoes_produto_df.style.format({"Média da Avaliação": "{:.2f}"}))
 
     # Média de Avaliação do Produto Selecionado
     st.subheader(f"Média de Avaliação de {produto_selecionado}")
