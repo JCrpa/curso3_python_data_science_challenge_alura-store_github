@@ -34,15 +34,15 @@ def calcular_faturamento_por_loja(dados):
 
 def calcular_vendas_por_categoria(dados):
     """Calcula o total de vendas por categoria."""
-    return dados.groupby('Categoria')['Quantidade'].sum()
+    return dados.groupby('Categoria do Produto')['Quantidade'].sum()
 
 def calcular_faturamento_por_categoria(dados):
     """Calcula o faturamento total por categoria."""
-    return dados.groupby('Categoria')['Valor_Venda'].sum()
+    return dados.groupby('Categoria do Produto')['Valor_Venda'].sum()
 
 def calcular_vendas_faturamento_por_categoria_loja(dados, categoria):
     """Calcula vendas e faturamento por categoria e loja."""
-    return dados[dados['Categoria'] == categoria].groupby('Loja').agg({'Quantidade': 'sum', 'Valor_Venda': 'sum'})
+    return dados[dados['Categoria do Produto'] == categoria].groupby('Loja').agg({'Quantidade': 'sum', 'Valor_Venda': 'sum'})
 
 def calcular_distribuicao_notas(dados):
     """Calcula a distribuição das notas."""
@@ -94,7 +94,7 @@ with aba_vendas_categoria:
     st.write("Esta seção mostra as vendas e o faturamento por categoria. Selecione uma categoria para ver os detalhes.")
 
     # Seleção de Categoria
-    categoria_selecionada = st.selectbox("Selecione uma Categoria:", dados['Categoria do Produto'].unique()) # Atualizado nome da coluna
+    categoria_selecionada = st.selectbox("Selecione uma Categoria:", dados['Categoria do Produto'].unique())
 
     vendas_por_categoria = calcular_vendas_por_categoria(dados)
     st.subheader("Total de Vendas por Categoria")
@@ -103,7 +103,7 @@ with aba_vendas_categoria:
     faturamento_por_categoria = calcular_faturamento_por_categoria(dados)
     # Converter Series para DataFrame e formatar
     faturamento_por_categoria_df = faturamento_por_categoria.reset_index()
-    faturamento_por_categoria_df.columns = ['Categoria', 'Faturamento'] # Renomear colunas
+    faturamento_por_categoria_df.columns = ['Categoria do Produto', 'Faturamento'] # Renomear colunas
     st.subheader("Faturamento por Categoria")
     st.dataframe(faturamento_por_categoria_df.style.format({"Faturamento": "R$ {:,.2f}"}))
 
@@ -117,7 +117,7 @@ with aba_vendas_categoria:
     fig_vendas_categoria, ax_vendas_categoria = plt.subplots(figsize=(10, 5))
     vendas_por_categoria.plot(kind='bar', ax=ax_vendas_categoria, color='lightgreen')
     ax_vendas_categoria.set_title("Total de Vendas por Categoria", fontsize=16)
-    ax_vendas_categoria.set_xlabel("Categoria", fontsize=12)
+    ax_vendas_categoria.set_xlabel("Categoria do Produto", fontsize=12) # Atualizado nome do label
     ax_vendas_categoria.set_ylabel("Total de Vendas", fontsize=12)
     ax_vendas_categoria.tick_params(axis='x', rotation=45)
     st.pyplot(fig_vendas_categoria)
@@ -127,7 +127,7 @@ with aba_vendas_categoria:
     fig_faturamento_categoria, ax_faturamento_categoria = plt.subplots(figsize=(10, 5))
     faturamento_por_categoria.plot(kind='bar', ax=ax_faturamento_categoria, color='lightcoral')
     ax_faturamento_categoria.set_title("Faturamento por Categoria", fontsize=16)
-    ax_faturamento_categoria.set_xlabel("Categoria", fontsize=12)
+    ax_faturamento_categoria.set_xlabel("Categoria do Produto", fontsize=12) # Atualizado nome do label
     ax_faturamento_categoria.set_ylabel("Faturamento", fontsize=12)
     ax_faturamento_categoria.tick_params(axis='x', rotation=45)
     st.pyplot(fig_faturamento_categoria)
