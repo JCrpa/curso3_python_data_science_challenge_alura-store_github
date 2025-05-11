@@ -46,11 +46,11 @@ def calcular_vendas_faturamento_por_categoria_loja(dados, categoria):
 
 def calcular_distribuicao_notas(dados):
     """Calcula a distribuição das notas."""
-    return dados['Nota'].value_counts().sort_index()
+    return dados['Avaliação da compra'].value_counts().sort_index()
 
 def calcular_media_avaliacoes_por_produto(dados):
     """Calcula a média das avaliações por produto."""
-    return dados.groupby('Produto')['Nota'].mean().sort_values(ascending=False)
+    return dados.groupby('Produto')['Avaliação da compra'].mean().sort_values(ascending=False)
 
 st.title("Análise de Dados da AluraStore")
 
@@ -149,7 +149,7 @@ with aba_avaliacoes:
 
     # Média de Avaliação do Produto Selecionado
     st.subheader(f"Média de Avaliação de {produto_selecionado}")
-    media_produto_selecionado = dados[dados['Produto'] == produto_selecionado]['Nota'].mean()
+    media_produto_selecionado = dados[dados['Produto'] == produto_selecionado]['Avaliação da compra'].mean()
     st.write(f"A média de avaliação de {produto_selecionado} é: {media_produto_selecionado:.2f}")
 
     # Gráfico de Distribuição das Notas
@@ -157,7 +157,7 @@ with aba_avaliacoes:
     fig_distribuicao_notas, ax_distribuicao_notas = plt.subplots(figsize=(8, 4))
     distribuicao_notas.plot(kind='bar', ax=ax_distribuicao_notas, color='orange')
     ax_distribuicao_notas.set_title("Distribuição das Notas", fontsize=16)
-    ax_distribuicao_notas.set_xlabel("Nota", fontsize=12)
+    ax_distribuicao_notas.set_xlabel("Avaliação", fontsize=12) # Melhorando o label
     ax_distribuicao_notas.set_ylabel("Quantidade", fontsize=12)
     ax_distribuicao_notas.tick_params(axis='x', rotation=0)
     st.pyplot(fig_distribuicao_notas)
