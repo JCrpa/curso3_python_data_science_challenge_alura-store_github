@@ -64,19 +64,21 @@ with aba_faturamento:
     st.header("Análise de Faturamento")
     st.write("Esta seção mostra o faturamento total e por loja. Use o filtro abaixo para selecionar as lojas desejadas.")
 
-    # Seleção de Loja
-    lojas_selecionadas = st.multiselect("Selecione as Lojas:", dados['Loja'].unique(), default=dados['Loja'].unique())
-    dados_filtrados = dados[dados['Loja'].isin(lojas_selecionadas)]
+    # Seleção de Loja (usando multiselect com opção "Todas")
+    lojas_disponiveis = dados['Loja'].unique()
+    opcoes_lojas = ["Todas"] + list(lojas_disponiveis)
+    lojas_selecionadas = st.multiselect("Selecione as Lojas:", opcoes_lojas, default=["Todas"], key="filtro_lojas")
 
-    # Adicione esta linha para verificar os dados filtrados
-    st.subheader("Dados Filtrados")
-    st.dataframe(dados_filtrados)
+    if "Todas" in lojas_selecionadas:
+        dados_filtrados_faturamento = dados
+    else:
+        dados_filtrados_faturamento = dados[dados['Loja'].isin(lojas_selecionadas)]
 
-    faturamento_total = calcular_faturamento_total(dados_filtrados)
+    faturamento_total = calcular_faturamento_total(dados_filtrados_faturamento)
     st.subheader("Faturamento Total")
     st.write(f"O faturamento total é: R$ {faturamento_total:,.2f}")
 
-    faturamento_por_loja = calcular_faturamento_por_loja(dados_filtrados)
+    faturamento_por_loja = calcular_faturamento_por_loja(dados_filtrados_faturamento)
     # Converter Series para DataFrame e formatar
     faturamento_por_loja_df = faturamento_por_loja.reset_index()
     faturamento_por_loja_df.columns = ['Loja', 'Faturamento']  # Renomear colunas para melhor clareza
