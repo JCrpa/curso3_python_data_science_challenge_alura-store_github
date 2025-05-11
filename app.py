@@ -68,6 +68,10 @@ with aba_faturamento:
     lojas_selecionadas = st.multiselect("Selecione as Lojas:", dados['Loja'].unique(), default=dados['Loja'].unique())
     dados_filtrados = dados[dados['Loja'].isin(lojas_selecionadas)]
 
+    # Adicione esta linha para verificar os dados filtrados
+    st.subheader("Dados Filtrados")
+    st.dataframe(dados_filtrados)
+
     faturamento_total = calcular_faturamento_total(dados_filtrados)
     st.subheader("Faturamento Total")
     st.write(f"O faturamento total é: R$ {faturamento_total:,.2f}")
