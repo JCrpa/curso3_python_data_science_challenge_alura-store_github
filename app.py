@@ -173,6 +173,10 @@ with aba_avaliacoes:
     # Seleção de Produto
     produto_selecionado = st.selectbox("Selecione um Produto:", dados['Produto'].unique())
 
+    # Criar placeholders para as informações do produto selecionado
+    media_produto_placeholder = st.empty()
+    separator_placeholder_avaliacao = st.empty()
+
     distribuicao_notas = calcular_distribuicao_notas(dados)
     st.subheader("Distribuição das Notas")
     st.dataframe(distribuicao_notas)
@@ -184,10 +188,13 @@ with aba_avaliacoes:
     st.subheader("Média das Avaliações por Produto")
     st.dataframe(media_avaliacoes_produto_df.style.format({"Média da Avaliação": "{:.2f}"}))
 
-    # Média de Avaliação do Produto Selecionado
-    st.subheader(f"Média de Avaliação de {produto_selecionado}")
-    media_produto_selecionado = dados[dados['Produto'] == produto_selecionado]['Avaliação da compra'].mean()
-    st.write(f"A média de avaliação de {produto_selecionado} é: {media_produto_selecionado:.2f}")
+    # Preencher o placeholder com a média de avaliação do produto selecionado
+    with media_produto_placeholder.container():
+        st.subheader(f"Média de Avaliação de {produto_selecionado}")
+        media_produto_selecionado = dados[dados['Produto'] == produto_selecionado]['Avaliação da compra'].mean()
+        st.write(f"A média de avaliação de {produto_selecionado} é: {media_produto_selecionado:.2f}")
+
+    separator_placeholder_avaliacao.markdown("---")
 
     # Gráfico de Distribuição das Notas
     st.subheader("Gráfico de Distribuição das Notas")
