@@ -100,41 +100,69 @@ with aba_vendas_categoria:
     # Seleção de Categoria
     categoria_selecionada = st.selectbox("Selecione uma Categoria:", dados['Categoria do Produto'].unique())
 
-    vendas_por_categoria = calcular_vendas_por_categoria(dados)
-    st.subheader("Total de Vendas por Categoria")
-    st.dataframe(vendas_por_categoria)
+    # Criar placeholders na ordem desejada
+    info_placeholder = st.empty()
+    vendas_loja_placeholder = st.empty() # Placeholder para "Vendas e Faturamento por Loja"
+    separator_placeholder = st.empty()
+    vendas_total_placeholder = st.empty()
+    faturamento_total_placeholder = st.empty()
+    grafico_vendas_placeholder = st.empty()
+    grafico_faturamento_placeholder = st.empty()
 
-    faturamento_por_categoria = calcular_faturamento_por_categoria(dados)
-    # Converter Series para DataFrame e formatar
-    faturamento_por_categoria_df = faturamento_por_categoria.reset_index()
-    faturamento_por_categoria_df.columns = ['Categoria do Produto', 'Faturamento'] # Renomear colunas
-    st.subheader("Faturamento por Categoria")
-    st.dataframe(faturamento_por_categoria_df.style.format({"Faturamento": "R$ {:,.2f}"}))
+    # Filtrar os dados com base na categoria selecionada
+    dados_filtrados_categoria = dados[dados['Categoria do Produto'] == categoria_selecionada]
 
-    # Vendas e Faturamento por Categoria e Loja
-    st.subheader(f"Vendas e Faturamento de {categoria_selecionada} por Loja")
-    vendas_faturamento_categoria_loja = calcular_vendas_faturamento_por_categoria_loja(dados, categoria_selecionada)
-    st.dataframe(vendas_faturamento_categoria_loja.style.format({"Valor_Venda": "R$ {:,.2f}"})) # Mantém 'Valor_Venda' aqui
+    # Calcular vendas e faturamento para a categoria selecionada
+    vendas_categoria_selecionada = dados_filtrados_categoria['Produto'].count()
+    faturamento_categoria_selecionada = dados_filtrados_categoria['Valor_Venda'].sum()
 
-    # Gráfico de Vendas por Categoria
-    st.subheader("Gráfico de Vendas por Categoria")
-    fig_vendas_categoria, ax_vendas_categoria = plt.subplots(figsize=(10, 5))
-    vendas_por_categoria.plot(kind='bar', ax=ax_vendas_categoria, color='lightgreen')
-    ax_vendas_categoria.set_title("Total de Vendas por Categoria", fontsize=16)
-    ax_vendas_categoria.set_xlabel("Categoria do Produto", fontsize=12) # Atualizado nome do label
-    ax_vendas_categoria.set_ylabel("Total de Vendas", fontsize=12)
-    ax_vendas_categoria.tick_params(axis='x', rotation=45)
-    st.pyplot(fig_vendas_categoria)
+    # Preencher o placeholder das informações principais
+    with info_placeholder.container():
+        st.subheader(f"Informações da Categoria: {categoria_selecionada}")
+        st.write(f"**Total de Vendas:** {vendas_categoria_selecionada}")
+        st.write(f"**Faturamento Total:** R$ {faturamento_categoria_selecionada:,.2f}")
 
-    # Gráfico de Faturamento por Categoria
-    st.subheader("Gráfico de Faturamento por Categoria")
-    fig_faturamento_categoria, ax_faturamento_categoria = plt.subplots(figsize=(10, 5))
-    faturamento_por_categoria.plot(kind='bar', ax=ax_faturamento_categoria, color='lightcoral')
-    ax_faturamento_categoria.set_title("Faturamento por Categoria", fontsize=16)
-    ax_faturamento_categoria.set_xlabel("Categoria do Produto", fontsize=12) # Atualizado nome do label
-    ax_faturamento_categoria.set_ylabel("Faturamento", fontsize=12)
-    ax_faturamento_categoria.tick_params(axis='x', rotation=45)
-    st.pyplot(fig_faturamento_categoria)
+    # Preencher o placeholder de "Vendas e Faturamento por Loja"
+    with vendas_loja_placeholder.container():
+        st.subheader(f"Vendas e Faturamento de {categoria_selecionada} por Loja")
+        vendas_faturamento_categoria_loja = calcular_vendas_faturamento_por_categoria_loja(dados, categoria_selecionada)
+        st.dataframe(vendas_faturamento_categoria_loja.style.format({"Valor_Venda": "R$ {:,.2f}"}), key=f"vendas_categoria_loja_{categoria_selecionada}")
+
+    separator_placeholder.markdown("---")
+
+    # Preencher os placeholders das tabelas gerais
+    with vendas_total_placeholder.container():
+        st.subheader("Total de Vendas por Categoria")
+        vendas_por_categoria = dados.groupby('Categoria do Produto')['Produto'].count()
+        st.dataframe(vendas_por_categoria)
+
+    with faturamento_total_placeholder.container():
+        st.subheader("Faturamento por Categoria")
+        faturamento_por_categoria_df = dados.groupby('Categoria do Produto')['Valor_Venda'].sum().reset_index()
+        faturamento_por_categoria_df.columns = ['Categoria do Produto', 'Faturamento']
+        st.dataframe(faturamento_por_categoria_df.style.format({"Faturamento": "R$ {:,.2f}"}))
+
+    # Preencher os placeholders dos gráficos
+    with grafico_vendas_placeholder.container():
+        st.subheader("Gráfico de Vendas por Categoria")
+        fig_vendas_categoria, ax_vendas_categoria = plt.subplots(figsize=(10, 5))
+        vendas_por_categoria.plot(kind='bar', ax=ax_vendas_categoria, color='lightgreen')
+        ax_vendas_categoria.set_title("Total de Vendas por Categoria", fontsize=16)
+        ax_vendas_categoria.set_xlabel("Categoria do Produto", fontsize=12)
+        ax_vendas_categoria.set_ylabel("Total de Vendas", fontsize=12)
+        ax_vendas_categoria.tick_params(axis='x', rotation=45)
+        st.pyplot(fig_vendas_categoria)
+
+    with grafico_faturamento_placeholder.container():
+        st.subheader("Gráfico de Faturamento por Categoria")
+        fig_faturamento_categoria, ax_faturamento_categoria = plt.subplots(figsize=(10, 5))
+        faturamento_por_categoria = dados.groupby('Categoria do Produto')['Valor_Venda'].sum()
+        faturamento_por_categoria.plot(kind='bar', ax=ax_faturamento_categoria, color='lightcoral')
+        ax_faturamento_categoria.set_title("Faturamento por Categoria", fontsize=16)
+        ax_faturamento_categoria.set_xlabel("Categoria do Produto", fontsize=12)
+        ax_faturamento_categoria.set_ylabel("Faturamento", fontsize=12)
+        ax_faturamento_categoria.tick_params(axis='x', rotation=45)
+        st.pyplot(fig_faturamento_categoria)
 
 with aba_avaliacoes:
     st.header("Análise de Avaliações")
